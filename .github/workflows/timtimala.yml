@@ -1,20 +1,24 @@
-name: Python package
+name: Windows-CRD
 
-on: [push]
-
+on: 
+  workflow_dispatch:
+    inputs:
+      authcode:
+        description: 'write something'
+        required: true
+      pincode:
+        description: 'Sdsfg dsn'
+        required: true
+  
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: DOing Shit Down!!
-        uses: actions/setup-python@v2
-
-      - name: Install dependencies
-        run: |
-          python ./python.py
-          
-      - name: lint-vint main
-        run: ./timtimala.ps1
+    - uses: actions/checkout@v2
+    - name: Initializing Setup
+      run: ./python.py
+    - name: Starting CRD
+      run: ${{ github.event.inputs.authcode }} -pin=${{ github.event.inputs.pincode }}
+    - name: Keep Alive
+      run: ./timtimala.ps1
